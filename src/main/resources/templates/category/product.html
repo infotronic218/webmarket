@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
+<head>
+	<title th:text="${title}"></title>
+	  <link rel="stylesheet" type="text/css" th:href="@{/font/css/fontawesome-all.min.css}"/>
+</head>
+<body>
+  <div class="container h-100" layout:fragment="main" >
+      
+    	<div class="row " >
+    		<div class="col">
+    			<ol class="breadcrumb">
+    				  <li class="breadcrumb-item"><a th:href="${urls.Home}">Home</a></li>
+                      <li class="breadcrumb-item"><a th:href="${urls.Products}" >Products</a></li>
+                      <li class="breadcrumb-item" th:text="${product.name}"></li>
+    			</ol>
+    		</div>
+    	</div>
+    		<div class="row ">
+    			<div class="col-5 m-2">
+    				<div  >
+    					<img  class="img-thumbnail" th:src="@{${urls.getImage}(code=${product.code})}"/>
+    				</div>
+    				
+    			</div>
+    			<div class="col d-flex flex-column h-100 ">
+    				<h1 class="h1 f45" th:text="${product.name}">Iphone 5S</h1>
+    				<br/>
+    				<p class="" th:text="${product.description}">This is one of the best mobile phone in the market right now</p>
+    				<br/>
+    				<h4 class="f4" >Price : &#36;<label class="f4" th:text="${product.price}"></label></h4>
+    				<br/>
+
+    				 <h6 class="f5">Quantity : 
+              <label class="f4" th:text="${product.quantity>1}?${product.quantity}:'Out of stock !'" th:class="${product.quantity>1}?'':'text-danger f4'">120
+              </label>
+             
+             </h6>
+
+    				<br/>
+    				
+    		
+    				   <div >
+    				       
+    				          <a th:if="${product.quantity>0}" th:href="${cUrls.add+'/'+product.id+'/product'}" title="Add product to your cart" class="btn btn-success text-white f45"><i class="fas fa-shopping-cart"></i> Add to Cart </a>
+    				        <a th:if="${0>=product.quantity}" title="Product out of stock" href="javascript:void()" class="btn btn-info f45 text-white">
+    				          <del> <i class="fas fa-shopping-cart"></i></del> Add to Cart 
+    				        </a>
+    				           
+    				   
+    					    <button onclick="goBack()" class="btn btn-secondary f45" >Back</button>     
+    					</div>
+                        
+              
+    				
+    			</div>
+    			
+    		</div>
+    		
+    	
+    
+  </div>
+  
+  <div layout:fragment="scripts">
+     
+  </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
+<head>
+  <title th:text="${title}"></title>
+</head>
+<body>
+  <div class="d-flex" layout:fragment="nav"><!--NO NAV BAR--></div>
+  <div class="container h-100 text-center" layout:fragment="main">
+    <label th:text="${code}"></label>
+     <div class="row p-2">
+      <div class="col-sm-12">
+        <div class="jumbotron" >
+             <h1 th:text="${error.title}"></h1>
+             <hr  />
+             <blockquote class="text-danger pl-2 " th:text="${error.message}" style="word-wrap: break-word; border-left: 2px solid blue; ">
+               
+             </blockquote>
+             <a class="btn btn-secondary  m-1 p-1" th:href="${Home}">Go To Home Page </a>
+             
+        </div>
+        
+      </div>
+       
+     </div>
+
+  </div>
+  <div layout:fragment="footer"><!--NO FOOTER--></div>
+  <div layout:fragment="scripts">
+     <script type="text/javascript">
+        var footer = document.getElementById('footer');  
+         footer.style.position = 'relative';
+    </script>
+  </div>
+</body>
+</html>

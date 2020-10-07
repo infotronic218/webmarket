@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
+<head>
+	<title th:text="${title}">Products</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/font/css/fontawesome-all.min.css}"/>
+</head>
+<body>
+  <div class="container h-100" layout:fragment="main">
+  	<h1 class="text-center f5 text-secondary">NafaMarket</h1>
+     <h3 class="text-justify f4">If you need more informations about us and our services you can contact us with our gmail address :
+      <ins> <em class="text-secondary ">infotronic218@gmail.com</em> </ins>or the address below.</h3>
+  	  <div >
+  	      <h1 class="f5 c4">On Social Media :</h1>
+  	      <ul>
+  	        <li >
+  	          <span style="color: blue; font-size: 36px;" class=" fab fa-facebook"></span>
+  	          <span class=" f4 " style="font-size: 36px;">Facebook</span>
+  	        </li>
+  	        <li >
+  	          <span style="color: blue; font-size: 36px;" class="fab fa-twitter-square"></span>
+  	          <span  class=" f4 " style="font-size: 36px;">Twitter</span>
+  	        </li>
+  	        <li >
+  	          <span style="color: blue; font-size: 36px;"  class="fab fa-linkedin"></span>
+  	          <span  class=" f4 " style="font-size: 36px;">Linkedin</span>
+  	        </li>
+  	        
+  	      </ul>  
+  	     
+  	  </div>
+  	   
+  </div>
+</body>
+</html>

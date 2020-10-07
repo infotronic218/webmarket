@@ -1,0 +1,56 @@
+<!DOCTYPE html >
+<html  lang="en" xmlns:th="www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
+<head>
+	<title th:text="${title}"></title>
+	  
+	
+</head>
+<body>
+
+	<div layout:fragment="products">
+		<!-- ARTICLES -->
+				    <h1 class="f45">Our Most Viewed products </h1>
+				 	<div class="row  m-0 p-0 ">
+					<!--PRODUCT-->
+					<div th:each="p:${products}" class="col m-2 " style="border:solid 1px; ">
+						<div class="d-flex flex-column">
+							<img class="home-product-image m-1" th:src="@{${urls.getImage}(code=${p.code})}"/>
+							<div class="">
+								<div class="float-left text-secondary" >
+								  <a class="f5 text-secondary" th:href="${urls.show+'/'+p.id+'/product'}" title="Click to view product " th:text="${p.name}"></a>
+								</div>
+								<div class="float-right"> &#36; <span th:text="${p.price}">150</span></div>
+							</div>
+							<div>
+							   <p th:text="${p.description}">
+							       This product is for mami time application
+								  This product is for mami time application 
+								  This product is for mami time application s   
+							   </p>
+							</div>
+						</div>
+						
+					
+					</div>
+					</div>
+					<nav class="ml-2 " aria-label="...">
+						  <ul class="pagination ">
+						    <li th:class="${pageCurrent==0}?'page-item disabled':'page-item'">
+						      <a class="page-link" th:href="@{${urls.Home}(page=${pageCurrent-1})}" tabindex="-1">Previous</a>
+						    </li>
+						    
+						    <li th:each="p, index:${pages}" th:class="${index.index==pageCurrent}?'page-item active':'page-item'">
+						      <a class="page-link" th:href="@{${urls.Home}(page=${index.index})}" > <span th:text="${index.count}"></span> <span class="sr-only">(current)</span></a>
+						    </li>
+						    
+						    <li th:class="${pageCurrent==#lists.size(pages)-1}?'page-item disabled':'page-item'" >
+						      <a class="page-link" th:href="@{${urls.Home}(page=${pageCurrent+1})}">Next</a>
+						    </li>
+						  </ul>
+					</nav>
+					
+	
+	</div>
+
+</body>
+</html>

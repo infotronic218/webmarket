@@ -1,0 +1,78 @@
+<!DOCTYPE html >
+<html  lang="en" xmlns:th="www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
+<head>
+	<title th:text="${title}"></title>
+	  
+	
+</head>
+<body>
+    <div layout:fragment="carousel"><!-- NO Coursel --></div>
+	<div layout:fragment="products">
+		           <!-- COMMAND -->
+				<div >
+					<div th:if="${#lists.size(commands)==0}" class="jumbotron">
+						<div>
+							<h1 class="f5  text-success">You don't have any Commands !</h1>
+						</div>
+					</div>
+					<!-- COMMANDS LIST -->
+					<div >
+					    <h1 class="text-center f4">List of your commands</h1>
+						<div th:each="command:${commands}" class="table-responsive">
+						<hr style="border: solid 1px;"/>
+						    <div class="text-center">
+						      <h3 class="f5 s36 text-secondary">Command Number <span th:text="${command.id}">1</span> du <span th:text="${command.date}"> 20-06-2018</span> at <span th:text="${command.time}"></span></h3> 
+						   </div>
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Product</th>
+										<th>Unit Price</th>
+										<th>Count</th>
+										<th>Total</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="line:${command.cartLines}">
+										<td class="">
+										  <div class="d-flex flex-column align-content-center align-items-center">
+										    <label th:text="${line.product.name}">Ordinateur</label>
+											<img style="height: 120px; width: 150px;" class="product-img" alt="product image" 
+											th:src="@{${urls.getImage}(code=${line.product.code})}"/>
+										  </div>
+											
+										</td>
+										<td class="text-center">
+											<label >$<span th:text="${line.product.price}">150</span></label>
+										</td>
+										<td class="text-center">
+											<label th:text="${line.productCount}">10</label>
+										</td>
+										<td class="text-center">
+											<label class="text-center">$ <span th:text="${line.getTotal()}"></span></label>
+										</td>
+									</tr>
+								</tbody>
+								<!-- <tfoot>
+								        <tr>
+										<th>Product</th>
+										<th>Unit Price</th>
+										<th>Count</th>
+										<th>Total</th>
+									</tr>
+								</tfoot> -->
+							</table>
+							<div>
+								<h4 class="f45">Total Price : $ <span th:text="${command.price}">2500</span></h4>
+								<h5 class="f4">Thanks for your trust. Our team will  contact you very soon !</h5>
+							</div>
+							<hr style="border: solid 1px;"/>
+							
+						</div>
+					</div>
+				</div>
+				
+	</div>
+
+</body>
+</html>

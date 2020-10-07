@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template">
+<head>
+<title th:text="${title}"></title>
+<meta charset="utf-8"/>
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.css"/>
+   <link rel="stylesheet" type="text/css" th:href="@{/font/css/fontawesome-all.min.css}"/>
+   <script  th:inline="javascript">
+       const rootUrl = [[${pUrls}]];
+       console.log(rootUrl);
+    </script>
+    
+</head>
+<body>
+  <div class="container h-100 mb-5" layout:fragment="main">
+
+      <!--DIALOG ELEMENT TO DISPLAY IMAGE-->
+
+      <div class="col-12">
+           <div th:if="${message !=null}" class=" m-2 alert alert-success alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <label th:text="${message}"></label>
+           </div>
+        </div>
+        <!--DIALOG ELEMENT TO DISPLAY IMAGE-->
+  	 <div class="d-flex flex-column align-items-center align-content-center" >
+        
+  	    <div class="col-sm-10 ">
+        
+  	    	<div class="card">
+  	    	<div class="card-header bg-secondary">
+  	    		<h5 class="text-center" >Products Management </h5>
+  	    	</div>
+  	    	<div class="card-body" >
+            <div class="p-1">
+              <a th:class="${action==pUrls.new}?'btn btn-primary':'btn btn-secondary'" th:href="${pUrls.new}">New</a>
+              
+            </div>
+            <!-- FOR NEW PRDUCT-->
+  	    		<form method="post" enctype="multipart/form-data" th:object="${product}" th:action="${pUrls.save}" >
+              <div class="form-group row">
+                 <label class="col-form-label col-sm-3">Enter Product Name</label>
+                 <div class="col">
+                  <!--HIDEN DATA-->
+                   <input hidden="true" type="text" th:field="*{id}"/>
+                   <input hidden="true"  type="text" th:field="*{code}"/>
+                   <input hidden="true" type="text" th:field="*{active}"/>
+
+                   <!--HIDEN DATA-->
+                     <input class="form-control" type="text"  th:field="*{name}" placeholder="Product Name" />
+                     
+                     <span class="f3 text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                 </div>
+              </div>
+              <div class="form-group row">
+                 <label class="col-form-label col-sm-3">Enter Brand Name</label>
+                 <div class="col">
+                     <input class="form-control" type="text" th:field="*{brand}" placeholder="Brand Name" th:errorclass="text-danger"/>
+                     <span class="f3 text-danger" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></span>
+                 </div>
+              </div>
+              <div class="form-group row">
+                 <label class="col-form-label col-sm-3">Product Description</label>
+                 <div class="col">
+                     <textarea class="form-control" rows="3" th:field="*{description}" placeholder="Product Description"> </textarea>
+                     <span class="f3 text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                 </div>
+              </div>
+
+              <div class="form-group row">
+                 <label class="col-form-label col-sm-3">Enter Unit Price</label>
+                 <div class="col">
+                     <input class="form-control" type="text" th:field="*{price}" placeholder="Unit Price" />
+                     <span class="f3 text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+                 </div>
+              </div>
+
+              <div class="form-group row">
+                 <label class="col-form-label col-sm-3">Quantity Available</label>
+                 <div class="col">
+                     <input class="form-control" type="text" th:field="*{quantity}" placeholder="Quantity Available" />
+                 </div>
+              </div>
+              <!--IMAGE MUTIPART FILE-->
+              <div class="form-group row">
+                 <label class="col-form-label col-sm-3">Select an Image</label>
+                 <div class="col">
+                     <input type="file" class="form-control"  th:field="*{file}" title="Select Categorie"  />
+                     <span class="f3 text-danger" th:if="${#fields.hasErrors('file')}" th:errors="*{file}"></span>
+                  </div>       
+                </div>
+              <div class="form-group row">
+                 <label class="col-form-label col-sm-3">Select Category</label>
+                 <div class="col">
+                    <select th:if="!${product.id}"  class="form-control"  name="categoryId" title="Select Categorie"  >
+                         <option disabled="disabled" selected="selected">Sélectionner une catégorie</option>
+                         <option th:value="${c.name}" th:each="c:${categories}" th:text="${c.name}">Categorie</option>
+                     </select> 
+                    
+                     <select th:if="${product.id}" class="form-control"  name="categoryId" title="Select Categorie"  >
+                         <option disabled="disabled" selected="selected">Sélectionner une catégorie</option>
+                         <option th:selected="${product.category.name==c.name}" th:value="${c.name}" th:each="c:${categories}" th:text="${c.name}">Categorie</option>
+                     </select> 
+                     <button onclick="addCategory()" type="button" class=" btn-sm m-1 btn-warning float-right">Add Category</button>
+                </div>
+              </div>
+              <div class="form-group row">
+                      <label class="col-form-label col-sm-3"></label>
+                     <div class="col">
+                      <input class="btn btn-secondary float-left" type="submit" value="Submit" />
+                     
+                      </div>
+                 
+                     
+                
+              </div>
+
+
+            </form>
+            
+            </div>
+           
+  	    	</div>
+  	    	<div class="card-footer">
+  	    		
+  	    	</div>
+  	    </div>
+  	    	
+  	    </div>
+        <!--DIALOG FORM FOR ADDING CATEGORY-->
+            <div class="">
+                
+                    <div id="categoryModal" class="modal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header bg-info">
+                              <h5 class="modal-title f5">New Category</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="categoryForm" th:object="${category}" th:action="${pUrls.addCategory}" method="post">
+                                      <div class="form-group row">
+                                       <label class="col-form-label col-sm-2  m-2">Name</label>
+                                       <div class="col-8">
+                                           <input class="form-control" type="text" th:field="*{name}" placeholder="Enter the category name" />
+                                           <span class="f3 text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                                       </div>
+                                      </div>
+                                      <div class="form-group row">
+                                       <label class="col-form-label col-sm-2  m-2"> Description</label>
+                                       <div class="col-8">
+                                           <textarea class="form-control" type="text" th:field="*{description}" placeholder="Enter the category description" rows="3"></textarea>
+                                           <span class="f3 text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                                       </div>
+                                       </div>
+                                       <div class="form-group row">
+                                       <label class="col-form-label col-sm-2  m-2"> </label>
+                                       <div class="col-8">
+                                          <input type="submit" class="btn btn-secondary"/>
+                                       </div>
+                                       </div>
+
+
+                                      </form>
+                               </div>                            
+                            </div>
+                          </div>
+                        </div>
+                     
+                </div>
+                 <!--DIALOG FORM FOR ADDING CATEGORY-->
+        <!--TABLE FOR PRODUCT LIST -->
+          <div class="container-fluid">
+             <div class="table-responsive">
+            
+             <table id="adminProductsTable" class="table table-bordered w-100">
+                  <thead>
+                    <tr>
+                      <th scope="col">Id</th>
+                      <th scope="col">&#160;</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Brand</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Active</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <!--
+                  <tbody>
+                    <tr th:each="p:${products}">
+                      <th scope="row" th:text="${p.id}">1</th>
+                      <td>
+                        <img th:alt="${p.code}" class="adminTableImage" th:src="@{${pUrls.getImage}(code=${p.code})}"/>
+
+                      </td>
+                      <td th:text="${p.name}">Otto</td>
+                      <td th:text="${p.quantity}">Quantity</td>
+                      <td th:text="${p.price}">Price</td>
+                      <td >
+                        
+                        <label class="switch">
+                             <input th:if="${p.active}" type="checkbox" checked="checked" />
+                             <input th:if="${p.active==false}" type="checkbox"  />
+                             <span class="slider round"></span>
+                         </label>
+                      </td>
+                      <td >
+                           <a class="btn btn-danger" href=""><i class="fas fa-trash-alt"></i></a>
+                           <a class="btn btn-primary" href=""><i class="fas fa-edit"></i></a>
+                           
+                      </td>
+                    </tr>
+                    
+                  </tbody>
+                  -->
+              </table>
+         
+        </div>
+          </div>
+       
+  	 </div>
+     
+  
+  <!--ALL THE PAGE DEPENDECES ARE HERE -->
+  <div layout:fragment="scripts">
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/datatables.min.js"></script>
+     <script type="text/javascript" th:src="@{/js/bootbox.min.js}">
+     </script>
+     <script type="text/javascript" th:src="@{/js/productManage.js}">
+     </script>
+     <script type="text/javascript" th:src="@{/js/jquery.validate.min.js}"></script>
+     <script type="text/javascript">
+      
+        var footer = document.getElementById('footer');  
+         footer.style.position = 'relative';
+         var $alert =$('.alert');
+         if($alert.length){
+          setTimeout(function(){
+            $alert.fadeOut('slow');
+          },3000);
+         }
+     
+     function addCategory(){
+      $('#categoryModal').modal('show')
+     }
+
+     //VALIDATION OF CATEGORY FORM
+     var $categoryForm = $('#categoryForm');
+     if($categoryForm.length){
+      $categoryForm.validate({
+
+          rules:{
+            name:{
+              required:true,
+              minlength:2
+            },
+            description:{
+              required:true,
+              minlength:2
+            }},
+            messages:{
+              name:{
+                required:'Please add the category name',
+                minlength:'The category name should not be less then 2 caracters'
+              },
+              description:{
+                required:'Please add the category description',
+                minlength:'The category description should not be less then 2 caracters'
+              }
+            }, errorElement:'em',
+              errorClass:'text-danger'
+
+      });
+     }
+    </script>
+  </div>
+</body>
+</html>

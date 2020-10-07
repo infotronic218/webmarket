@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/extras-springsecurity4">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link rel="icon" th:href="@{/img/icon.png}"/>
+
+     
+    <title th:text="${title}">Carousel Template for Bootstrap</title>
+     
+     
+     
+     
+    <!-- Bootstrap core CSS -->
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/theme.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    
+    
+  </head>
+  <body >
+   <div class="d-flex flex-column parent" >
+   	 <div layout:fragment="nav">
+   		<div th:replace="fragments/header::navbar"></div>
+   	 </div>
+    
+	<!-- MAIN CONTENT  -->
+	<div class="content">
+	<div class="m-1 h-100 " layout:fragment="main">
+	    <!-- CATEGORIE AND CAROUSEL -->
+	     <div class="row ">
+				<div class="col-md-3 my-2" layout:fragment="main-menu-categorie">
+					<div class="d-flex flex-column align-items-center">
+					    
+						<h3  class="f6">
+						  <img class="f6 img-responsive" alt="NafaMarket" th:src="@{/img/NafaMarket.png}" style="width: 250px;"/>
+						</h3>
+						
+						
+	   
+					</div>
+					<h4 class="text-center f5 bg-info p-2 m-0">Categories</h4>
+					<div class="list-group" >
+	                         <a th:each="c:${categories}" th:class="${c==category}?'list-group-item f5 active':'list-group-item f5'" th:text="${c.name}" th:href="@{'/market/show/category/'+${c.id}+'/products'}"></a>
+	                </div>
+	                
+	
+				</div>
+				<div class="col-md-9 my-4" layout:fragment="main-body">
+	         <!-- CAROUSEL -->
+	              <div layout:fragment="carousel">
+					<div id="carouselExampleIndicators" class="carousel slide"
+						data-ride="carousel">
+						<ol class="carousel-indicators">
+							<li data-target="#carouselExampleIndicators" data-slide-to="0"
+								class="active"></li>
+							<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+							<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+						</ol>
+						<div class="carousel-inner">
+							<div class="carousel-item active">
+								<img class="d-block w-100 coursel-img" th:src="@{/img/coursel1.jpg}"
+									alt="First slide" />
+							</div>
+							<div class="carousel-item">
+								<img class="d-block w-100 coursel-img" th:src="@{/img/coursel2.jpg}"
+									alt="Second slide" />
+							</div>
+							<div class="carousel-item">
+								<img class="d-block w-100 coursel-img" th:src="@{/img/coursel3.jpeg}"
+									alt="Third slide" />
+							</div>
+						</div>
+						<a class="carousel-control-prev" href="#carouselExampleIndicators"
+							role="button" data-slide="prev"> <span
+							class="carousel-control-prev-icon bg-secondary" aria-hidden="true"></span> <span
+							class="sr-only">Previous</span>
+						</a> <a class="carousel-control-next "  href="#carouselExampleIndicators"
+							role="button" data-slide="next"> <span
+							class="carousel-control-next-icon bg-secondary" aria-hidden="true" style="color:blue;"></span> <span
+							class="sr-only" >Next</span>
+						</a>
+					</div>
+					<hr class="featurette-divider" />
+	             </div>
+				 <!-- CAROUSEL -->
+	            
+	            <div class="container-fluid marketing" layout:fragment="products">
+	                  
+					<!-- ARTICLES -->
+					<div class="row">
+						<!--PRODUCT-->
+						<div class="col-lg-3">
+							<div class="d-flex flex-column">
+								<img th:src="@{/img/art-320-150.png}"/>
+								<div class="">
+									<div class="float-left text-secondary">Fist Product</div>
+									<div class="float-right">$250</div>
+								</div>
+								<div>
+									This product is for mami time application
+									This product is for mami time application 
+									This product is for mami time application s 
+								</div>
+							</div>
+							
+						</div>
+						<!--PRODUCT-->
+						<div class="col-lg-4">
+							<img class="img-circle"
+								src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+								alt="Generic placeholder image" width="140" height="140" />
+							<h2>Heading</h2>
+							<p>Donec sed odio dui. Etiam porta sem malesuada magna mollis
+								euismod. Nullam id dolor id nibh ultricies vehicula ut id elit.
+								Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+								Praesent commodo cursus magna.</p>
+							<p>
+								<a class="btn btn-secondary" href="#" role="button">View
+									details »</a>
+							</p>
+						</div>
+						<!-- /.col-lg-4 -->
+						<div class="col-lg-4">
+							<img class="img-circle"
+								src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+								alt="Generic placeholder image" width="140" height="140" />
+							<h2>Heading</h2>
+							<p>Duis mollis, est non commodo luctus, nisi erat porttitor
+								ligula, eget lacinia odio sem nec elit. Cras mattis consectetur
+								purus sit amet fermentum. Fusce dapibus, tellus ac cursus
+								commodo, tortor mauris condimentum nibh.</p>
+							<p>
+								<a class="btn btn-secondary" href="#" role="button">View
+									details »</a>
+							</p>
+						</div>
+						<!-- /.col-lg-4 -->
+						<div class="col-lg-4">
+							<img class="img-circle"
+								src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+								alt="Generic placeholder image" width="140" height="140" />
+							<h2>Heading</h2>
+							<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis
+								in, egestas eget quam. Vestibulum id ligula porta felis euismod
+								semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris
+								condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+							<p>
+								<a class="btn btn-secondary" href="#" role="button">View
+									details »</a>
+							</p>
+						</div>
+						
+					</div>
+				
+				</div>
+	
+	         </div>
+	         </div>
+	         <!-- CATEGORIE AND CAROUSEL -->
+				
+				
+			
+		</div>
+		</div>
+		<!-- MAIN CONTENT  -->
+		<!-- FOOTER -->
+			<div class="footer"  layout:fragment="footer">
+	    	  <div th:include="fragments/footer::footer"></div>
+	    	<!-- FOOTER -->
+	       </div>
+		</div>
+
+    
+    
+	
+
+
+
+
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+     <script type="text/javascript" th:src="@{/js/bootstrap/popper.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+    
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script type="text/javascript" th:src="@{/js/holder.min.js}"></script>
+    
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script type="text/javascript" th:src="@{/js/bootstrap/ie10-viewport-bug-workaround.js}"></script>
+    <script type="text/javascript">
+    	function goBack(){
+			window.history.back();
+		}
+           //DIALOG MESSAGE
+		    var $alert =$('.alert');
+		    if($alert.length){
+		     setTimeout(function(){
+		       $alert.fadeOut('slow');
+		     },3000);
+		    }
+		    //DIALOG MESSAGE
+    	$('.carousel').carousel();
+    	$('#n1').ready(function(){
+    		var nav = document.getElementById('n1');
+    		console.log(nav.style);
+    	});
+    </script>
+    <div layout:fragment="scripts">
+    	
+    </div>
+    
+    
+  </body>
+</html>
